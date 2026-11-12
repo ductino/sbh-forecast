@@ -1,4 +1,4 @@
-﻿# Dự báo mực nước hồ thủy điện Sông Ba Hạ
+# Dự báo mực nước hồ thủy điện Sông Ba Hạ
 
 Mã nguồn của báo cáo thực tập doanh nghiệp: **Xây dựng đề cương nghiên cứu bài toán dự báo mực nước về hồ thủy điện**.
 
@@ -16,8 +16,8 @@ Dự án dự báo mực nước thượng lưu hồ Sông Ba Hạ từ số li�
 
 | File / thư mục | Nội dung |
 |---|---|
-| `DuBao_MucNuoc_SBH_Phan1.ipynb` | Phần 1: tiền xử lý, phân tích khám phá dữ liệu (EDA), xây dựng đặc trưng |
-| `DuBao_MucNuoc_SBH_Phan2_DeHieu.ipynb` | Phần 2: huấn luyện, so sánh và đánh giá các mô hình |
+| `DuBao_MucNuoc_SBH_1.ipynb` | Phần 1: tiền xử lý, phân tích khám phá dữ liệu (EDA), xây dựng đặc trưng |
+| `DuBao_MucNuoc_SBH_2.ipynb` | Phần 2: huấn luyện, so sánh và đánh giá các mô hình |
 | `sbh_prep.py` | Hàm đọc và tiền xử lý dữ liệu dùng chung cho hai notebook |
 | `ket_qua_so_sanh.csv` | Bảng kết quả so sánh các mô hình |
 | `figs/` | Hình EDA (chuỗi thời gian, tính mùa, tương quan, độ trễ mưa, tự tương quan, cân bằng nước) |
