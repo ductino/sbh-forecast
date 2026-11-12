@@ -13,8 +13,21 @@ VAL_END = "2024-12-31 23:00"
 FLOOD_MONTHS = [9, 10, 11, 12]
 
 
+def fill_short_gaps(s: pd.Series, max_gap: int = MAX_INTERP_HOURS, method: str = "interp") -> pd.Series:
+    """Chỉ điền các đoạn thiếu <= max_gap giờ; đoạn dài hơn giữ nguyên NaN hoàn toàn."""
+    isna = s.isna()
+    grp = (isna != isna.shift()).cumsum()
+    gap_len = isna.groupby(grp).transform("sum")           # độ dài đoạn NaN chứa từng điểm
+    if method == "interp":
+        filled = s.interpolate(method="time", limit_area="inside")   # nội suy tuyến tính theo thời gian
+    else:
+        filled = s.ffill()                                           # điền tiến cho biến rời rạc
+    return s.where(~(isna & (gap_len <= max_gap)), filled)
+
+
 def load_clean(path: str) -> pd.DataFrame:
-    """Đọc CSV, đổi tên cột, loại ngoại lai vật lý, nội suy khoảng thiếu ngắn (<= 6 giờ)."""
+    """Đọc CSV, đổi tên cột, loại ngoại lai vật lý, nội suy khoảng thiếu ngắn (<= 6 giờ).
+    Các đoạn thiếu dài hơn 6 giờ được giữ nguyên NaN (các mẫu liên quan bị loại ở bước chia dữ liệu)."""
     df = pd.read_csv(path, parse_dates=["time"], encoding="utf-8-sig").set_index("time")
     df = df.rename(columns={
         "Temperature (°C)": "Temp", "Humidity (%)": "Humid", "Precipitations (mm)": "Rain",
@@ -30,8 +43,11 @@ def load_clean(path: str) -> pd.DataFrame:
 
     cont = ["H_tl", "Q_ve", "Sigma_Qx", "Q_xt", "Q_xm"]
     disc = ["N_cxs", "N_cxm"]
-    df[cont] = df[cont].interpolate(method="time", limit=MAX_INTERP_HOURS, limit_area="inside")
-    df[disc] = df[disc].ffill(limit=MAX_INTERP_HOURS)
+    for c in cont:
+        df[c] = fill_short_gaps(df[c], method="interp")
+    for c in disc:
+        df[c] = fill_short_gaps(df[c], method="ffill")
+
     df["H_dbt"], df["H_c"] = MNDBT, MNC
     df["is_flood"] = df.index.month.isin(FLOOD_MONTHS).astype(int)
     return df
