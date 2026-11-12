@@ -2,9 +2,8 @@
 
 Mã nguồn của báo cáo thực tập doanh nghiệp: **Xây dựng đề cương nghiên cứu bài toán dự báo mực nước về hồ thủy điện**.
 
-- **Tác giả:** [ĐIỀN: họ tên sinh viên]
-- **Đơn vị thực tập:** [ĐIỀN: tên công ty, hoặc xóa dòng này nếu không được nêu]
-- **Giảng viên hướng dẫn:** [ĐIỀN: tên giảng viên]
+- **Tác giả:** [Phạm Văn Đức]
+- **Giảng viên hướng dẫn:** [Lê Hồng Anh]
 
 ## Giới thiệu
 
